@@ -11,7 +11,8 @@
 
   font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
   color: var(--text);
-  background: var(--bg);
+  /* the background video sits behind everything, so the page itself stays transparent */
+  background: transparent;
 }
 
 * {
@@ -21,6 +22,31 @@
 body {
   margin: 0;
   background: var(--bg);
+}
+
+/* once the video is mounted the page must not paint over it */
+body:has(.bg-video) {
+  background: transparent;
+}
+
+.bg-video {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  opacity: 0.55;
+  pointer-events: none;
+}
+
+/* just enough darkening to keep text readable over the brighter frames */
+.bg-video + .scrim {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(15, 17, 21, 0.55), rgba(15, 17, 21, 0.75));
+  pointer-events: none;
 }
 
 .app {
@@ -54,9 +80,18 @@ h2 {
   margin: 4px 0 0;
 }
 
+/* the header sits straight on the video, so give it something to lift off */
+header h1,
+header .muted {
+  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.8);
+}
+
 .queue {
   font-size: 13px;
-  color: var(--muted);
+  font-weight: 600;
+  color: var(--text);
+  /* solid pill so the count stays legible over the video */
+  background: rgba(24, 27, 34, 0.85);
   border: 1px solid var(--border);
   border-radius: 999px;
   padding: 6px 14px;
@@ -64,7 +99,8 @@ h2 {
 }
 
 .card {
-  background: var(--card);
+  background: rgba(24, 27, 34, 0.72);
+  backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 20px;
@@ -84,6 +120,7 @@ h2 {
 }
 
 input[type='text'],
+input[type='password'],
 select {
   width: 100%;
   padding: 9px 12px;
@@ -95,6 +132,7 @@ select {
 }
 
 input[type='text']:focus,
+input[type='password']:focus,
 select:focus {
   outline: none;
   border-color: var(--accent);

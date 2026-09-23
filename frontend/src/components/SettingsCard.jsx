@@ -17,12 +17,14 @@ export default function SettingsCard({ client, onSaved }) {
   const [enabled, setEnabled] = useState(false);
   const [status, setStatus] = useState(null);
   const [saving, setSaving] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   // reset the form whenever a different client is picked
   useEffect(() => {
     setWebhook(client.slack_webhook_url || '');
     setEnabled(client.slack_notifications_enabled);
     setStatus(null);
+    setRevealed(false);
   }, [client]);
 
   async function save() {
@@ -66,12 +68,18 @@ export default function SettingsCard({ client, onSaved }) {
 
       <label className="field">
         <span>Webhook URL</span>
-        <input
-          type="text"
-          value={webhook}
-          placeholder="https://hooks.slack.com/services/..."
-          onChange={(e) => setWebhook(e.target.value)}
-        />
+        <div className="row">
+          {/* a webhook url is a credential - anyone holding it can post to the channel */}
+          <input
+            type={revealed ? 'text' : 'password'}
+            value={webhook}
+            placeholder="https://hooks.slack.com/services/..."
+            onChange={(e) => setWebhook(e.target.value)}
+          />
+          <button type="button" onClick={() => setRevealed((v) => !v)}>
+            {revealed ? 'Hide' : 'Show'}
+          </button>
+        </div>
       </label>
 
       <label className="toggle">

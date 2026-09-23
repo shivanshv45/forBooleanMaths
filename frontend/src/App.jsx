@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { api } from './api/client.js';
 import SettingsCard from './components/SettingsCard.jsx';
 import LogsTable from './components/LogsTable.jsx';
+import BackgroundVideo from './components/BackgroundVideo.jsx';
 
 export default function App() {
   const [clients, setClients] = useState([]);
@@ -67,10 +68,23 @@ export default function App() {
 
   const selected = clients.find((c) => c._id === selectedId);
 
-  if (loading) return <main className="app"><p className="muted">Loading...</p></main>;
+  if (loading) {
+    return (
+      <>
+        <BackgroundVideo />
+        <div className="scrim" />
+        <main className="app">
+          <p className="muted">Loading...</p>
+        </main>
+      </>
+    );
+  }
 
   return (
-    <main className="app">
+    <>
+      <BackgroundVideo />
+      <div className="scrim" />
+      <main className="app">
       <header>
         <div>
           <h1>Slack Report Dispatcher</h1>
@@ -126,6 +140,7 @@ export default function App() {
           </section>
         </>
       )}
-    </main>
+      </main>
+    </>
   );
 }
