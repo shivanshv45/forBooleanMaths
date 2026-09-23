@@ -1,0 +1,30 @@
+node_modules/
+
+# secrets - real slack webhook urls live here
+.env
+.env.*
+!.env.example
+
+dist/
+build/
+coverage/
+.cache/
+
+*.log
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+.DS_Store
+Thumbs.db
+
+.vscode/
+.idea/
+*.swp
+
+# my own working notes and local checks, not part of the submission
+INTERVIEW_GUIDE.md
+SCRIPT.md
+PRD.md
+plan.md
+backend/.verify/

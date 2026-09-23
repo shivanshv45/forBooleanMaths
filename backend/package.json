@@ -1,0 +1,23 @@
+{
+  "name": "slack-report-dispatcher-backend",
+  "version": "1.0.0",
+  "description": "Rate-limited Slack report dispatcher - API and worker",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "worker": "node src/worker.js",
+    "worker:dev": "node --watch src/worker.js",
+    "seed": "node src/scripts/seed.js"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "ioredis": "^5.4.1",
+    "mongoose": "^8.8.0",
+    "node-cron": "^3.0.3"
+  }
+}
